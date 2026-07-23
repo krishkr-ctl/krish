@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Web Developer</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #060814;
+      --surface: rgba(20, 27, 53, 0.82);
+      --surface-strong: rgba(21, 31, 65, 0.96);
+      --text: #f4f7ff;
+      --muted: #9cb3d3;
+      --accent: #5a91ff;
+      --accent-2: #65e4ab;
+      --shadow: 0 28px 70px rgba(0, 0, 0, 0.25);
+      --radius: 28px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, rgba(73, 126, 255, 0.22), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(33, 214, 184, 0.18), transparent 32%),
+        var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      padding: 40px 24px 80px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      gap: 32px;
+      padding: 30px 0 40px;
+      align-items: center;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 420px);
+    }
+
+    .hero-copy {
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(94, 146, 255, 0.35);
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      backdrop-filter: blur(18px);
+      background: rgba(15, 22, 54, 0.65);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    h1 {
+      margin: 24px 0 18px;
+      font-size: clamp(3.2rem, 6vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 10ch;
+      background: linear-gradient(90deg, #8cb4ff, #8cffbe);
+      background-clip: text;
+      color: transparent;
+    }
+
+    .typing {
+      display: inline;
+      color: #65e4ab;
+      position: relative;
+    }
+
+    .typing::after {
+      content: '|';
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 1;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 40%, 100% { opacity: 1; }
+      50%, 90% { opacity: 0; }
+    }
+
+    p.lead {
+      max-width: 66ch;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button,
+    .icon-button {
+      border: none;
+      border-radius: 18px;
+      font: inherit;
+      font-weight: 700;
+      min-height: 50px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      box-shadow: 0 20px 40px rgba(20, 30, 70, 0.18);
+    }
+
+    .button {
+      background: linear-gradient(135deg, var(--accent), #69f2b5);
+      color: #06101f;
+      padding: 0 26px;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 54px rgba(20, 30, 70, 0.24);
+    }
+
+    .icon-button {
+      width: 50px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+    }
+
+    .icon-button:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .hero-glow {
+      display: grid;
+      place-items: center;
+      padding: 36px;
+      border-radius: 36px;
+      background: linear-gradient(180deg, rgba(18, 23, 46, 0.92), rgba(11, 15, 33, 0.85));
+      box-shadow: 0 32px 80px rgba(11, 15, 33, 0.4);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-glow::before {
+      content: '';
+      position: absolute;
+      inset: -30px;
+      background: radial-gradient(circle at top right, rgba(111, 201, 255, 0.18), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(101, 228, 171, 0.2), transparent 32%);
+      pointer-events: none;
+    }
+
+    .profile-card {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      min-height: 460px;
+      padding: 36px;
+      border-radius: 34px;
+      background: rgba(15, 20, 43, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      gap: 24px;
+      overflow: hidden;
+    }
+
+    .profile-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 60%);
+      pointer-events: none;
+    }
+
+    .profile-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 28px;
+      overflow: hidden;
+      background: radial-gradient(circle at top left, rgba(106, 194, 255, 0.22), transparent 32%),
+        linear-gradient(180deg, rgba(250, 250, 250, 0.06), rgba(45, 63, 97, 0.5));
+      display: grid;
+      place-items: center;
+      color: #9eb5ff;
+      font-size: 3rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 900;
+      user-select: none;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    .profile-info {
+      display: grid;
+      gap: 12px;
+    }
+
+    .profile-info strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .profile-info p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    .stats {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stat {
+      display: grid;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .stat strong {
+      font-size: 1.35rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .section {
+      padding: 60px 0;
+      display: grid;
+      gap: 28px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--text);
+      font-size: 1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 44px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .features,
+    .projects,
+    .contact-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .feature-card,
+    .project-card,
+    .contact-card {
+      position: relative;
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(12, 18, 41, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+
+    .feature-card:hover,
+    .project-card:hover,
+    .contact-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(101, 228, 171, 0.35);
+    }
+
+    .feature-card::after,
+    .project-card::after,
+    .contact-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: radial-gradient(circle at top right, rgba(101, 228, 171, 0.16), transparent 30%);
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .feature-card:hover::after,
+    .project-card:hover::after,
+    .contact-card:hover::after {
+      opacity: 1;
+    }
+
+    .feature-card h3,
+    .project-card h3,
+    .contact-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p,
+    .project-card p,
+    .contact-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .feature-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .project-card small {
+      display: inline-flex;
+      margin-top: 12px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      padding: 12px 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #65e4ab, #5a91ff);
+      color: #06101f;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .project-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(37, 108, 221, 0.22);
+      background: linear-gradient(135deg, #4da7ff, #76f4bf);
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 62px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .social-link span {
+      margin-left: 10px;
+      font-size: 0.95rem;
+    }
+
+    .contact-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .contact-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: var(--accent-2);
+    }
+
+    .shine {
+      position: absolute;
+      inset: -40px 30px -40px -30px;
+      background: linear-gradient(135deg, rgba(101, 228, 171, 0.14), transparent 38%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-list,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 24px 16px 60px;
+      }
+
+      .hero {
+        padding-top: 60px;
+        gap: 24px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .method-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .feature-card,
+      .project-card,
+      .contact-card {
+        border-radius: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Web Developer & Creative Coder</span>
+        <h1>Hi, I’m <span style="color: #b1d0ff;">Krish Kumar Prajapati</span></h1>
+        <p class="lead">I build modern websites and interactive experiences using HTML, CSS, and JavaScript. My work is clean, responsive, and designed for real users.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="button">Let’s work together</a>
+          <a href="#projects" class="icon-button" aria-label="View projects">&#128187;</a>
+          <a href="#skills" class="icon-button" aria-label="View skills">&#9881;</a>
+        </div>
+      </div>
+
+      <div class="hero-glow reveal">
+        <div class="profile-card">
+          <div class="profile-photo">
+            <img src="https://raw.githubusercontent.com/krishkr-ctl/img/main/IMG20260108103013.jpg.jpeg" alt="Profile photo" />
+          </div>
+          <div class="profile-info">
+            <strong>Web Developer</strong>
+            <p>Passionate about clean interfaces, fast performance, and memorable user experiences. I specialize in front-end development and interactive web design.</p>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>HTML</strong>
+              <span>Semantic pages and fast layouts.</span>
+            </div>
+            <div class="stat">
+              <strong>CSS</strong>
+              <span>Animations, dark mode, and responsive design.</span>
+            </div>
+            <div class="stat">
+              <strong>JavaScript</strong>
+              <span>Dynamic UI, interactions, and tool integrations.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="skills">
+      <p class="section-title">Skills & Tools</p>
+      <div class="feature-list">
+        <div class="feature-card">
+          <h3>Responsive Design</h3>
+          <p>Websites that adapt beautifully to mobile, tablet, and desktop screens with polished layouts.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Modern Animations</h3>
+          <p>Smooth transitions, hover effects, and motion-driven interactions using CSS and JavaScript.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Clean Code</h3>
+          <p>Readable HTML, maintainable CSS, and efficient JavaScript that scales with your project.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="projects">
+      <p class="section-title">Featured Projects</p>
+      <div class="projects">
+        <div class="project-card">
+          <h3>MobiDraw</h3>
+          <p>An interactive drawing app built with HTML, CSS, and JavaScript. Draw, choose colors, and save your sketches in a modern UI.</p>
+          <small>HTML · CSS · JavaScript</small>
+          <a class="project-link" href="https://krishkr-ctl.github.io/mobidraw/" target="_blank" rel="noreferrer noopener">Live demo</a>
+        </div>
+        <div class="project-card">
+          <h3>CGPA Calculator</h3>
+          <p>A simple Grade Point Average calculator for students. Enter course scores and credits to calculate semester CGPA instantly.</p>
+          <small>HTML · CSS · JavaScript</small>
+          <a class="project-link" href="https://krishkr-ctl.github.io/CGPA-Calculator/" target="_blank" rel="noreferrer noopener">Live demo</a>
+        </div>
+        <div class="project-card">
+          <h3>Memory Game</h3>
+          <p>A classic matching memory game where players flip cards to find pairs. Built with HTML, CSS, and JavaScript; includes scoring and restart functionality.</p>
+          <small>HTML · CSS · JavaScript</small>
+          <a class="project-link" href="https://krishkr-ctl.github.io/Memory_game/" target="_blank" rel="noreferrer noopener">Live demo</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <p class="section-title">Connect</p>
+      <div class="social-grid">
+        <a class="social-link" href="https://github.com/krishkr-ctl" target="_blank" rel="noreferrer noopener">
+          <span>GitHub</span>
+        </a>
+        <a class="social-link" href="https://www.instagram.com/mr._unknown_0019/" target="_blank" rel="noreferrer noopener">
+          <span>Instagram</span>
+        </a>
+        <a class="social-link" href="https://facebook.com/your-facebook" target="_blank" rel="noreferrer noopener">
+          <span>Facebook</span>
+        </a>
+        <a class="social-link" href="https://linkedin.com/in/krish kr. prajapati" target="_blank" rel="noreferrer noopener">
+          <span>LinkedIn</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section reveal" id="contact">
+      <p class="section-title">Contact</p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <strong>Email</strong>
+          <p>krishkrprajapati54@gmail.com</p>
+        </div>
+        <div class="contact-card">
+          <strong>Location</strong>
+          <p>BantaHazam ,Silli,ranchi(jh) 835102.</p>
+        </div>
+        <div class="contact-card">
+          <strong>Availability</strong>
+          <p>Open for freelance projects and collaborations.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const words = ['HTML', 'CSS', 'JavaScript', 'responsive sites', 'creative UIs'];
+    const typing = document.querySelector('.typing');
+    let index = 0;
+    let letter = 0;
+    let currentWord = '';
+    let isDeleting = false;
+
+    function type() {
+      if (!typing) return;
+      if (index >= words.length) index = 0;
+      currentWord = words[index];
+      const partial = isDeleting ? currentWord.slice(0, --letter) : currentWord.slice(0, ++letter);
+      typing.textContent = partial;
+      if (!isDeleting && letter === currentWord.length) {
+        isDeleting = true;
+        setTimeout(type, 1200);
+      } else if (isDeleting && letter === 0) {
+        isDeleting = false;
+        index++;
+        setTimeout(type, 300);
+      } else {
+        setTimeout(type, isDeleting ? 80 : 120);
+      }
+    }
+
+    type();
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealElements.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
